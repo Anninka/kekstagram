@@ -12,6 +12,8 @@ const getRandom = function(min, max) {
   return NaN;
 }
 
+getRandom(1,10);
+
 /**
  * Функция получает длину комментария, максимальную длину и сравнивает их
  * @param  {number} string длина комментария
@@ -21,6 +23,8 @@ const getRandom = function(min, max) {
 const checkMaxLength = function(string, maxLength = 140) {
   return string.length <= maxLength;
 }
+
+checkMaxLength(110);
 
 
 const notes = ['до', 'ре', 'ми', 'фа', 'соль', 'ля', 'си' ];
@@ -32,3 +36,5 @@ const notes = ['до', 'ре', 'ми', 'фа', 'соль', 'ля', 'си' ];
 const getRandomElement = function(array) {
   return array[Math.floor(Math.random() * (array.length - 1))];
 }
+
+getRandomElement(notes);
