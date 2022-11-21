@@ -1,5 +1,7 @@
 
-const POST_DESCRIPIONS_COUNT = 25;
+'use strict';
+
+const POST_COUNT = 25;
 
 const DESCRIPTIONS = [
   'Удачный кадр',
@@ -36,20 +38,20 @@ const NAMES = [
   'Маша',
 ];
 
+
+
 /**
  * Функция получает два числа для диапазона: мин и макс
  * @param  {number} min начальное значение диапазона (больше или равно нулю)
  * @param  {number} max конечное значение диапазона (больше нуля)
  * @returns {number | NaN} рандомное число из заданного диапазона
  */
-const getRandom = function(min, max) {
+const getRandom = (min, max) => {
   if(min >= 0 && max > 0 && max !== min && max > min) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   return NaN;
-}
-
-getRandom(1,10);
+};
 
 /**
  * Функция получает длину комментария, максимальную длину и сравнивает их
@@ -57,9 +59,9 @@ getRandom(1,10);
  * @param  {number} maxLength максимальная длина комментария (по умолчанию 140)
  * @returns {boolean} true, если длина комментария меньше или равна максимальной
  */
-const checkMaxLength = function(string, maxLength = 140) {
+const checkMaxLength = (string, maxLength = 140) => {
   return string.length <= maxLength;
-}
+};
 
 checkMaxLength(110);
 
@@ -68,25 +70,21 @@ checkMaxLength(110);
  * @param {number} number число, определяющее длину массива (> 0)
  * @returns {array | NaN} массив чисел от 1 до number
  */
-const createArrayOfNumbers = function(number) {
+const createArrayOfNumbers = (number) => {
   if (number > 0) {
     return Array.from(Array(Math.floor(number)).keys()).map(i => i+1)
   }
   return NaN;
-}
-
-const notes = ['до', 'ре', 'ми', 'фа', 'соль', 'ля', 'си' ];
+};
 
 /**
  * Функция получает массив
  * @param  {array} array
  * @returns {element} случайный элемент массива
  */
-const getRandomArrayElement = function(array) {
+const getRandomArrayElement = (array) => {
   return array[Math.floor(Math.random() * (array.length))];
-}
-
-getRandomArrayElement(notes);
+};
 
 /**
  * Функция перемешивает элементы массива
@@ -106,32 +104,50 @@ const shuffle = (array) => {
   return cloneArray;
 };
 
+const commentsId = shuffle(createArrayOfNumbers(100));
 const descriptionsId = shuffle(createArrayOfNumbers(25));
 const photosId = shuffle(createArrayOfNumbers(25));
-const commentsId = shuffle(createArrayOfNumbers(100));
 
+/**
+ * Функция генерирует коментарии со случайным содержимым
+ * @returns {object} комментарий к посту с рандомными значениями
+ */
+const createComment = () => {
+  return {
+    id: commentsId.shift(),
+    avatar: `img/avatar-${getRandom(1, 6)}.svg`,
+    message: getRandomArrayElement(MESSAGES),
+    name: getRandomArrayElement(NAMES),
+  };
+};
+
+/**
+ * Функция получает случайное число в параметрах
+ * @param {number} randomNumber
+ * @returns {array} массив из объектов, количество которых указано в параметре
+ */
+const getArrayOfComments = (randomNumber) => {
+  let ArrayOfComments = [];
+
+  for (let i = 1; i <= randomNumber; i++) {
+    ArrayOfComments.push(createComment());
+  }
+  return ArrayOfComments;
+};
+
+/**
+ * Функция возвращает объект, в котором рандомно генерируется пост для соц сети
+ * @returns {object}
+ */
 const createPost = () => {
   return {
     id: descriptionsId.shift(),
     url: `photos/${photosId.shift()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandom(15, 200),
-    comment: [
-      {
-        id: commentsId.shift(),
-        avatar: `img/avatar-${getRandom(1, 6)}.svg`,
-        message: getRandomArrayElement(MESSAGES),
-        name: getRandomArrayElement(NAMES),
-      },
-      {
-        id: commentsId.shift(),
-        avatar: `img/avatar-${getRandom(1, 6)}.svg`,
-        message: getRandomArrayElement(MESSAGES),
-        name: getRandomArrayElement(NAMES),
-      },
-    ],
+    comment: getArrayOfComments(getRandom(1, 4)),
   };
 };
 
-const postDescriptions = new Array(POST_DESCRIPIONS_COUNT).fill(null).map(() => createPost());
+const postDescriptions = new Array(POST_COUNT).fill(null).map(createPost);
 postDescriptions[0];
