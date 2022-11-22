@@ -2,6 +2,22 @@
 'use strict';
 
 const POST_COUNT = 25;
+const ELEMENTS_COUNT = 100;
+
+const AvatarNumber = {
+  MIN: 1,
+  MAX: 6,
+};
+
+const NumberOfLikes = {
+  MIN: 15,
+  MAX: 200,
+};
+
+const NumberOfComments = {
+  MIN: 1,
+  MAX: 4,
+};
 
 const DESCRIPTIONS = [
   'Удачный кадр',
@@ -92,30 +108,23 @@ const getRandomArrayElement = (array) => {
  * @returns {array} новый массив с перемешанными элементами
  */
 const shuffle = (array) => {
-  const cloneArray = array.slice();
-  let j;
-  let temp;
-  for (let i = 0; i < cloneArray.length; i++) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = cloneArray[j];
-    cloneArray[j] = cloneArray[i];
-    cloneArray[i] = temp;
-  }
+  let cloneArray = array.slice();
+  array.forEach((_, i)=>{
+    let j = Math.floor(Math.random() * (i + 1));
+    [cloneArray[j], cloneArray[i]] = [cloneArray[i], cloneArray[j]];
+  });
   return cloneArray;
 };
-
-const commentsId = shuffle(createArrayOfNumbers(100));
-const descriptionsId = shuffle(createArrayOfNumbers(25));
-const photosId = shuffle(createArrayOfNumbers(25));
 
 /**
  * Функция генерирует коментарии со случайным содержимым
  * @returns {object} комментарий к посту с рандомными значениями
  */
 const createComment = () => {
+  const commentsId = shuffle(createArrayOfNumbers(ELEMENTS_COUNT));
   return {
     id: commentsId.shift(),
-    avatar: `img/avatar-${getRandom(1, 6)}.svg`,
+    avatar: `img/avatar-${getRandom(AvatarNumber.MIN, AvatarNumber.MAX)}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
   };
@@ -140,12 +149,15 @@ const getArrayOfComments = (randomNumber) => {
  * @returns {object}
  */
 const createPost = () => {
+  const descriptionsId = shuffle(createArrayOfNumbers(POST_COUNT));
+  const photosId = shuffle(createArrayOfNumbers(POST_COUNT));
+
   return {
     id: descriptionsId.shift(),
     url: `photos/${photosId.shift()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandom(15, 200),
-    comment: getArrayOfComments(getRandom(1, 4)),
+    likes: getRandom(NumberOfLikes.MIN, NumberOfLikes.MAX),
+    comment: getArrayOfComments(getRandom(NumberOfComments.MIN, NumberOfComments.MAX)),
   };
 };
 
