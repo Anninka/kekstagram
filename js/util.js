@@ -13,18 +13,6 @@ const getRandom = (min, max) => {
 };
 
 /**
- * Функция получает длину комментария, максимальную длину и сравнивает их
- * @param  {number} string длина комментария
- * @param  {number} maxLength максимальная длина комментария (по умолчанию 140)
- * @returns {boolean} true, если длина комментария меньше или равна максимальной
- */
-const checkMaxLength = (string, maxLength = 140) => {
-  return string.length <= maxLength;
-};
-
-checkMaxLength(110);
-
-/**
  * Функция получает число и создает массив от 1 до этого числа
  * @param {number} number число, определяющее длину массива (> 0)
  * @returns {array | NaN} массив чисел от 1 до number

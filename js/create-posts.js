@@ -73,10 +73,10 @@ const createComment = () => {
  * @param {number} randomNumber
  * @returns {array} массив из объектов, количество которых указано в параметре
  */
-const getArrayOfComments = (randomNumber) => {
+const getArrayOfComments = (number) => {
   let ArrayOfComments = [];
 
-  for (let i = 1; i <= randomNumber; i++) {
+  for (let i = 1; i <= number; i++) {
     ArrayOfComments.push(createComment());
   }
   return ArrayOfComments;
