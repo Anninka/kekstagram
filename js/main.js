@@ -1,3 +1,2 @@
 
-import {createPosts} from './create-posts.js';
-createPosts();
+import './miniaturs.js';
