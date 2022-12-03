@@ -1,21 +1,24 @@
 
 import {createPosts} from './create-posts.js';
 
-const picturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content;
-const newPictureTemplate = pictureTemplate.querySelector('.picture');
+const createMiniaturs = () => {
+  const picturesContainer = document.querySelector('.pictures');
+  const pictureTemplate = document.querySelector('#picture').content;
+  const newPictureTemplate = pictureTemplate.querySelector('.picture');
+  const userPosts = createPosts();
+  const picturesContainerFragment = document.createDocumentFragment();
 
-const userPosts = createPosts();
+  userPosts.forEach(({url, likes, comment}) => {
+    const userPicture = newPictureTemplate.cloneNode(true);
+    userPicture.querySelector('.picture__img').src = url;
+    userPicture.querySelector('.picture__likes').textContent = likes;
+    userPicture.querySelector('.picture__comments').textContent = comment.length;
 
-const picturesContainerFragment = document.createDocumentFragment();
+    picturesContainerFragment.appendChild(userPicture);
+  });
 
-userPosts.forEach(({url, likes, comment}) => {
-  const userPicture = newPictureTemplate.cloneNode(true);
-  userPicture.querySelector('.picture__img').src = url;
-  userPicture.querySelector('.picture__likes').textContent = likes;
-  userPicture.querySelector('.picture__comments').textContent = comment.length;
+  picturesContainer.appendChild(picturesContainerFragment);
+  return picturesContainer;
+}
 
-  picturesContainerFragment.appendChild(userPicture);
-});
-
-picturesContainer.appendChild(picturesContainerFragment);
+export {createMiniaturs};

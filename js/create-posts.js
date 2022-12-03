@@ -101,6 +101,11 @@ const createPost = () => {
   };
 };
 
+/**
+ * Функция создаёт массив объектов-постов для соц сети
+ * @param {number} count количество постов, которые должны быть в массиве
+ * @returns {array} массив из объектов
+ */
 const createPosts = (count = POST_COUNT) => {
   return new Array(count).fill(null).map(createPost);
 };

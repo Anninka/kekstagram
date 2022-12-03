@@ -1,2 +1,4 @@
 
-import './miniaturs.js';
+import {createMiniaturs} from './miniaturs.js';
+
+createMiniaturs();
