@@ -4,21 +4,6 @@ import {getRandom, createArrayOfNumbers, getRandomArrayElement, shuffle} from '.
 const POST_COUNT = 25;
 const ELEMENTS_COUNT = 100;
 
-const AvatarNumber = {
-  MIN: 1,
-  MAX: 6,
-};
-
-const NumberOfLikes = {
-  MIN: 15,
-  MAX: 200,
-};
-
-const NumberOfComments = {
-  MIN: 1,
-  MAX: 4,
-};
-
 const DESCRIPTIONS = [
   'Удачный кадр',
   'Один кадр, а воспоминаний на всю жизнь!',
@@ -54,6 +39,25 @@ const NAMES = [
   'Маша',
 ];
 
+const AvatarNumber = {
+  MIN: 1,
+  MAX: 6,
+};
+
+const NumberOfLikes = {
+  MIN: 15,
+  MAX: 200,
+};
+
+const NumberOfComments = {
+  MIN: 1,
+  MAX: 4,
+};
+
+const descriptionsId = shuffle(createArrayOfNumbers(POST_COUNT));
+
+const photosId = shuffle(createArrayOfNumbers(POST_COUNT));
+
 /**
  * Функция генерирует коментарии со случайным содержимым
  * @returns {object} комментарий к посту с рандомными значениями
@@ -82,14 +86,12 @@ const getArrayOfComments = (number) => {
   return ArrayOfComments;
 };
 
+
 /**
  * Функция возвращает объект, в котором рандомно генерируется пост для соц сети
  * @returns {object}
  */
 const createPost = () => {
-  const descriptionsId = shuffle(createArrayOfNumbers(POST_COUNT));
-  const photosId = shuffle(createArrayOfNumbers(POST_COUNT));
-
   return {
     id: descriptionsId.shift(),
     url: `photos/${photosId.shift()}.jpg`,
@@ -99,6 +101,11 @@ const createPost = () => {
   };
 };
 
+/**
+ * Функция создаёт массив объектов-постов для соц сети
+ * @param {number} count количество постов, которые должны быть в массиве
+ * @returns {array} массив из объектов
+ */
 const createPosts = (count = POST_COUNT) => {
   return new Array(count).fill(null).map(createPost);
 };

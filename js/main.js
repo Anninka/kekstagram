@@ -1,3 +1,4 @@
 
-import {createPosts} from './create-posts.js';
-createPosts();
+import {createMiniaturs} from './miniaturs.js';
+
+createMiniaturs();
